@@ -1,0 +1,28 @@
+/**
+ * @param {string[]} paths
+ * @return {string[][]}
+ */
+var findDuplicate = function(paths) {
+    let map = {};
+    paths.forEach(path => {
+        let [folder, ...files] = path.split(" ");
+        files.forEach(file => {
+            let [name, content] = file.split("(");
+            if (!map.hasOwnProperty(content)) {
+                map[content] = [];
+            }
+            map[content].push(folder + '/' + name);
+        });
+    });
+
+    let results = [];
+    Object.keys(map).forEach((key) => {
+        if (map.hasOwnProperty(key)) {
+            let value = map[key];
+            if (value && value.length > 1) {
+                results.push(value);
+            }
+        }
+    });
+    return results;
+};
